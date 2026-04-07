@@ -20,9 +20,8 @@
         @endif
         
     </head>
-    
+    @include('layouts.navigation')
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] min-h-screen">
-        <x-navbar />
         <section x-data="{
             activeSlide: 1,
             slides: [1, 2, 3],
@@ -137,5 +136,6 @@
                 </div>
             </div>
         </main>
+        1
     </body>
 </html>
