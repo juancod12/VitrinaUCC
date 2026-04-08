@@ -11,7 +11,7 @@ use App\Http\Controllers\Seller\BusinessController;
 
 
 
-Route::middleware('auth')
+Route::middleware('auth', 'comprador')
     ->prefix('dashboard') // Las URLs empezarán con /dashboard/...
     ->name('user.')      // Los nombres de rutas serán user.index, user.profile, etc.
     ->group(function () {
@@ -20,46 +20,18 @@ Route::middleware('auth')
     Route::get('/panel-seller', [SellerController::class, 'index'])->name('seller.sellerPanel');
     Route::get('/panel-seller/productos', [ProductsController::class, 'index'])->name('seller.products');
     Route::get('/panel-seller/crear-productos', [ProductsController::class, 'create'])->name('seller.products.create');
-    Route::get('/products/store', [ProductsController::class, 'store'])->name('seller.products.store');
 
-    // Ruta POST para guardar (Esta es la que debes poner en el action del form)
-    Route::get('/panel-seller/negocio-datos', [BusinessController::class, 'index'])->name('seller.business.index');
-    Route::put('/panel-seller/negocio-datos', [BusinessController::class, 'update'])->name('seller.profile.update');
+    Route::get('/panel-seller/negocio', [BusinessController::class, 'index'])->name('seller.business.index');
+    Route::put('/panel-seller/negocio', [BusinessController::class, 'update'])->name('seller.profile.update');
 
+    Route::put('/dashboard/products/{id}', [ProductsController::class, 'update'])->name('seller.products.update');
 
+    Route::get('/dashboard/products/{id}', [ProductsController::class, 'edit'])->name('seller.products.edit');
 
+    Route::post('/products/store', [ProductsController::class, 'store'])->name('seller.products.store');
 
-
-
-
-    // Mostrar formulario de creación
-    Route::get('/productos/crear', [ProductController::class, 'create'])->name('public.products.create');
-
-    // Guardar el producto (POST)
-    Route::post('/productos', [ProductController::class, 'store'])->name('public.products.store');
-
-    // Ver un producto específico
-    Route::get('/productos/{id}', [ProductController::class, 'show'])->name('public.products.show');
-
-    // Mostrar formulario de edición
-    Route::get('/productos/{id}/editar', [ProductController::class, 'edit'])->name('public.products.edit');
-
-    // Actualizar el producto (PUT o PATCH)
-    Route::put('/productos/{id}', [ProductController::class, 'update'])->name('public.products.update');
-
-    // Eliminar el producto (DELETE)
-    Route::delete('/productos/{id}', [ProductController::class, 'destroy'])->name('public.products.destroy');
-        
+    Route::delete('/products/{id}', [ProductsController::class, 'destroy'])->name('seller.products.destroy');
 
     });
-
-
-Route::middleware(['auth', 'admin'])
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
-
-    });
-
 
 require __DIR__.'/auth.php';

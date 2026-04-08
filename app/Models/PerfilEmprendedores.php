@@ -1,12 +1,21 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 
 class PerfilEmprendedores extends Model
 {
-    protected $fillable = ['user_id', 'nombre_negocio', 'descripcion', 'logo', 'banner', 'telefono', 'correo_contacto', 'sitio_web', 'verificado'];
+        protected $fillable = [
+        'user_id', 
+        'nombre_negocio', 
+        'descripcion', 
+        'telefono', 
+        'correo_contacto', 
+        'sitio_web', 
+        'logo', 
+        'banner'
+    ];
 
     protected $casts = ['verificado' => 'boolean'];
 

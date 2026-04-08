@@ -24,7 +24,10 @@ class User extends Authenticatable
     protected $casts = ['activo' => 'boolean', 'bloqueado' => 'boolean'];
 
     public function perfilComprador() { return $this->hasOne(PerfilCompradores::class); }
-    public function perfilEmprendedor() { return $this->hasOne(PerfilEmprendedores::class); }
+    public function perfilEmprendedor()
+    {
+        return $this->hasOne(PerfilEmprendedores::class, 'user_id');
+    }
     public function direcciones() { return $this->hasMany(Direccion::class); }
     public function comentarios() { return $this->hasMany(Comentario::class); }
     public function pedidos() { return $this->hasMany(Pedido::class, 'comprador_id'); }

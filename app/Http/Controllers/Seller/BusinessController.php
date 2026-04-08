@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Seller;
-
+use App\Models\PerfilEmprendedores;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BusinessController extends Controller
 {
@@ -12,23 +13,10 @@ class BusinessController extends Controller
      */
     public function index()
     {
-        // 1. Obtenemos el perfil del usuario autenticado
-        // Usamos la relación definida en el modelo User
-        $perfil = auth()->user()->perfilEmprendedor;
+        // Buscamos el perfil o creamos una instancia VACÍA (sin guardar en DB aún)
+        // Esto garantiza que $perfil NUNCA sea null.
+        $perfil = PerfilEmprendedores::firstOrNew(['user_id' => auth()->id()]);
 
-        // 2. Si no existe un perfil creado aún, podemos enviar null 
-        // o crear una instancia vacía para que la vista no explote
-        if (!$perfil) {
-            // Opción A: Crear un registro básico vacío si quieres que siempre exista
-            /*
-            $perfil = \App\Models\PerfilEmprendedor::create([
-                'user_id' => auth()->id(),
-                'nombre_negocio' => 'Mi Nuevo Negocio'
-            ]);
-            */
-        }
-
-        // 3. Retornamos la vista pasando la variable 'perfil'
         return view('seller.business.index', compact('perfil'));
     }
 
@@ -81,7 +69,7 @@ class BusinessController extends Controller
         ]);
 
         // 2. Buscar el perfil o crear una instancia nueva vinculada al usuario
-        $perfil = PerfilEmprendedor::firstOrNew(['user_id' => auth()->id()]);
+        $perfil = PerfilEmprendedores::firstOrNew(['user_id' => auth()->id()]);
 
         // 3. Asignar datos básicos
         $perfil->nombre_negocio = $request->nombre_negocio;

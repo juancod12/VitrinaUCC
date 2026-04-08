@@ -56,7 +56,7 @@
                                 </a>
 
                                 {{-- Mi Negocio --}}
-                                <a href="#"
+                                <a href="{{ route('user.seller.business.index') }}"
                                 class="flex items-center px-4 py-3 text-sm font-medium border-l-4 transition-all duration-200 
                                 {{ request()->routeIs('seller.business.*') 
                                     ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-gray-800 dark:text-blue-400' 

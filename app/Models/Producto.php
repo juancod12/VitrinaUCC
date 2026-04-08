@@ -43,9 +43,8 @@ class Producto extends Model
         return $this->belongsTo(PerfilEmprendedores::class, 'emprendedor_id');
     }
 
-    public function imagenes()
-    {
-        return $this->hasMany(ImagenProducto::class);
+    public function imagenes() {
+        return $this->hasMany(ImagenProducto::class, 'producto_id');
     }
 
     public function comentarios()

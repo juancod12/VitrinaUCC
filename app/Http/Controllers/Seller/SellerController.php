@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Models\PerfilEmprendedores;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -12,7 +14,10 @@ class SellerController extends Controller
      */
     public function index()
     {
-        return view('layouts.sellerPanel');
+        // Obtenemos el perfil para mostrar el nombre del negocio en el panel
+        $perfil = auth()->user()->perfilEmprendedor;
+
+        return view('layouts.sellerPanel', compact('perfil'));
     }
 
     /**
