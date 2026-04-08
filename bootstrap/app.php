@@ -13,13 +13,13 @@ return Application::configure(basePath: dirname(__DIR__))
         // --- AQUÍ CARGAMOS EL ARCHIVO EXTRA ---
         then: function () {
             Route::middleware('web')
-                ->group(base_path('routes/products.php'));
+                ->group(base_path('routes/seller.php'));
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
         // --- AQUÍ REGISTRAMOS EL PERMISO ADMIN ---
         $middleware->alias([
-            'admin' => \App\Http\Middleware\AdminMiddleware::class, 
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

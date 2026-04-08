@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PerfilEmprendedor extends Model
+class PerfilEmprendedores extends Model
 {
     protected $fillable = ['user_id', 'nombre_negocio', 'descripcion', 'logo', 'banner', 'telefono', 'correo_contacto', 'sitio_web', 'verificado'];
 
@@ -16,5 +16,22 @@ class PerfilEmprendedor extends Model
     public function productos() { return $this->hasMany(Producto::class, 'emprendedor_id'); }
     public function servicios() { return $this->hasMany(Servicio::class, 'emprendedor_id'); }
     public function publicaciones() { return $this->hasMany(Publicacion::class, 'emprendedor_id'); }
-    
+
+    public function isComplete()
+    {
+        $camposObligatorios = [
+            'nombre_negocio', 
+            'descripcion', 
+            'telefono', 
+            'correo_contacto'
+        ];
+
+        foreach ($camposObligatorios as $campo) {
+            if (empty($this->$campo)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

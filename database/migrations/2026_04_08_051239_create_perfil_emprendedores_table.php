@@ -11,17 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('perfil_emprendedors', function (Blueprint $table) {
+        Schema::create('perfil_emprendedores', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+            // Relación con users
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
+
             $table->string('nombre_negocio');
             $table->text('descripcion')->nullable();
+
             $table->string('logo')->nullable();
             $table->string('banner')->nullable();
+
             $table->string('telefono')->nullable();
             $table->string('correo_contacto')->nullable();
             $table->string('sitio_web')->nullable();
+
             $table->boolean('verificado')->default(false);
+
             $table->timestamps();
         });
     }
@@ -31,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('perfil_emprendedors');
+        Schema::dropIfExists('perfil_emprendedores');
     }
 };
