@@ -40,17 +40,17 @@
                                 {{-- Mis Productos --}}
                                 <a href="{{ route('user.seller.products') }}"
                                 class="flex items-center px-4 py-3 text-sm font-medium border-l-4 transition-all duration-200 
-                                {{ request()->routeIs('user.seller.products') 
-                                    ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-gray-800 dark:text-blue-400' 
+                                {{ request()->routeIs('user.seller.products')
+                                    ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-gray-800 dark:text-blue-400'
                                     : 'border-transparent text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800' }}">
                                     <span class="mr-3 text-lg">📦</span> Mis Productos
                                 </a>
 
                                 {{-- Mis Publicaciones (Cambia 'nombre.de.ruta' por la real) --}}
-                                <a href="#"
+                                <a href="{{ route('user.seller.publications.index') }}"
                                 class="flex items-center px-4 py-3 text-sm font-medium border-l-4 transition-all duration-200 
-                                {{ request()->routeIs('seller.publications.*') 
-                                    ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-gray-800 dark:text-blue-400' 
+                                {{ request()->routeIs('user.seller.publications.*')
+                                    ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-gray-800 dark:text-blue-400'
                                     : 'border-transparent text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800' }}">
                                     <span class="mr-3 text-lg">📣</span> Mis Publicaciones
                                 </a>
@@ -58,21 +58,11 @@
                                 {{-- Mi Negocio --}}
                                 <a href="{{ route('user.seller.business.index') }}"
                                 class="flex items-center px-4 py-3 text-sm font-medium border-l-4 transition-all duration-200 
-                                {{ request()->routeIs('seller.business.*') 
-                                    ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-gray-800 dark:text-blue-400' 
+                                {{ request()->routeIs('user.seller.business.*')
+                                    ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-gray-800 dark:text-blue-400'
                                     : 'border-transparent text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800' }}">
                                     <span class="mr-3 text-lg">🏢</span> Mi Negocio
                                 </a>
-
-                                {{-- Comentarios --}}
-                                <a href="#"
-                                class="flex items-center px-4 py-3 text-sm font-medium border-l-4 transition-all duration-200 
-                                {{ request()->routeIs('seller.comments.*') 
-                                    ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-gray-800 dark:text-blue-400' 
-                                    : 'border-transparent text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800' }}">
-                                    <span class="mr-3 text-lg">💬</span> Comentarios
-                                </a>
-
                             </nav>
                         </div>
                     </aside>

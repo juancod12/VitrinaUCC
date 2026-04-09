@@ -67,28 +67,41 @@
                         @endguest
 
                         @auth
-                            <div class="relative" x-data="{ openAccount: false }">
-                                <button @click="openAccount = !openAccount" @click.away="openAccount = false" class="flex flex-col items-center text-gray-700 hover:text-sky-600 focus:outline-none transition group">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <span class="text-[9px] font-black uppercase">Mi Cuenta</span>
-                                </button>
+                            @if(Auth::user()->rol === 'emprendedor')
+                                <div class="relative" x-data="{ openAccount: false }">
+                                    <button @click="openAccount = !openAccount" @click.away="openAccount = false" class="flex flex-col items-center text-gray-700 hover:text-sky-600 focus:outline-none transition group">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span class="text-[9px] font-black uppercase">Mi Cuenta</span>
+                                    </button>
 
-                                <div x-show="openAccount" x-cloak x-transition class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden">
-                                    <div class="px-4 py-3 bg-gray-50/50 border-b border-gray-100">
-                                        <p class="text-xs text-gray-500 font-bold uppercase text-center">Hola,</p>
-                                        <p class="text-sm text-center font-medium text-gray-900 truncate">{{ Auth::user()->name }}</p>
-                                    </div>
-                                    <div class="py-1">
-                                        <a href="{{ route('user.seller.sellerPanel') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-50 transition">Mi Perfil</a>
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            @csrf
-                                            <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition">Cerrar Sesión</button>
-                                        </form>
+                                    <div x-show="openAccount" x-cloak x-transition class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden">
+                                        <div class="px-4 py-3 bg-gray-50/50 border-b border-gray-100">
+                                            <p class="text-xs text-gray-500 font-bold uppercase text-center">Hola,</p>
+                                            <p class="text-sm text-center font-medium text-gray-900 truncate">{{ Auth::user()->name }}</p>
+                                        </div>
+                                        <div class="py-1">
+                                            <a href="{{ route('user.seller.sellerPanel') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-50 transition">Mi Perfil</a>
+                                            <form method="POST" action="{{ route('logout') }}">
+                                                @csrf
+                                                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition">Cerrar Sesión</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @else
+                                {{-- Opcional: Si es otro tipo de usuario (como admin o vendedor) y quieres que solo vea el botón de Cerrar Sesión directo --}}
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="flex flex-col items-center text-red-500 hover:text-red-700 transition group">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                        </svg>
+                                        <span class="text-[9px] font-black uppercase">Salir</span>
+                                    </button>
+                                </form>
+                            @endif
                         @endauth
                     </div>
 

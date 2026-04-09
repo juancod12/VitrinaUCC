@@ -114,7 +114,7 @@
                         <div>
                             <x-input-label for="rol" value="¿Qué serás en la Vitrina?" />
                             <select id="rol" name="rol" class="block mt-1 w-full border-gray-300 focus:border-lime-500 focus:ring-lime-500 rounded-lg text-gray-700 text-sm h-[40px] shadow-sm px-4">
-                                <option value="usuario">Comprador (Quiero comprar)</option>
+                                <option value="comprador">Comprador (Quiero comprar)</option>
                                 <option value="emprendedor">Emprendedor (Quiero vender)</option>
                             </select>
                             <x-input-error :messages="$errors->get('rol')" class="mt-1" />

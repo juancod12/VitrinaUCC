@@ -16,7 +16,7 @@ class CheckComprador
     public function handle(Request $request, Closure $next): Response
     {
         // Verificamos si hay usuario logueado Y si su rol es 'comprador'
-        if (auth()->check() && auth()->user()->rol === 'comprador') {
+        if (auth()->check() && auth()->user()->rol === 'emprendedor') {
             return $next($request);
         }
 

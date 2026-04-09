@@ -11,7 +11,7 @@ use App\Http\Controllers\Seller\BusinessController;
 
 
 
-Route::middleware('auth', 'comprador')
+Route::middleware('auth', 'emprendedor')
     ->prefix('dashboard') // Las URLs empezarán con /dashboard/...
     ->name('user.')      // Los nombres de rutas serán user.index, user.profile, etc.
     ->group(function () {
@@ -31,6 +31,8 @@ Route::middleware('auth', 'comprador')
     Route::post('/products/store', [ProductsController::class, 'store'])->name('seller.products.store');
 
     Route::delete('/products/{id}', [ProductsController::class, 'destroy'])->name('seller.products.destroy');
+
+    Route::resource('/publicaciones', PublicationsController::class)->names('seller.publications');
 
     });
 
