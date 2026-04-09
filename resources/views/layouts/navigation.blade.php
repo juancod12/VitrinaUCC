@@ -32,8 +32,8 @@
                                     ['route' => 'dashboard', 'label' => 'Hoy', 'active' => request()->routeIs('dashboard')],
                                     ['route' => '/', 'label' => 'Inicio', 'active' => request()->is('/')],
                                     ['route' => 'public.products.index', 'label' => 'Productos', 'active' => request()->routeIs('public.products.index')],
-                                    ['route' => '#', 'label' => 'Servicios', 'active' => request()->routeIs('servicios.*')],
-                                    ['route' => '#', 'label' => 'Proyectos', 'active' => request()->routeIs('proyectos.*')],
+                                    ['route' => 'public.servicios', 'label' => 'Servicios', 'active' => request()->routeIs('public.servicios')],
+                                    ['route' => 'public.proyectos', 'label' => 'Proyectos', 'active' => request()->routeIs('public.proyectos')],
                                 ];
                             @endphp
 
@@ -81,9 +81,9 @@
                             </a>
                         @endauth
 
-                        <button class="bg-lime-500 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-lime-600 shadow-md shadow-lime-100 transition">
+                        <a href="{{ route('public.comunidad') }}" class="bg-lime-500 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-lime-600 shadow-md shadow-lime-100 transition">
                             Acceso Comunidad
-                        </button>
+                        </a>
 
                         @guest
                             <a href="{{ route('login') }}" class="flex flex-col items-center text-gray-500 hover:text-sky-600 transition group">

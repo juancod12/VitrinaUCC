@@ -5,19 +5,22 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
 
-// Ver el listado de productos --en uso
-Route::get('/productos', [ProductController::class, 'index'])->name('public.products.index');
-
+// Página principal
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');})->name('dashboard');
+    return view('dashboard');
+})->name('dashboard');
 
+// Páginas públicas
+Route::get('/productos',  [ProductController::class, 'index'])->name('public.products.index');
+Route::get('/servicios', fn() => view('public.products.servicios'))->name('public.servicios');
+Route::get('/proyectos',  fn() => view('public.products.proyectos'))->name('public.proyectos');
+Route::get('/comunidad',  fn() => view('public.products.comunidad'))->name('public.comunidad');
 
-
-
+// Perfil autenticado
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
