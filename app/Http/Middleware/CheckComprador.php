@@ -19,6 +19,10 @@ class CheckComprador
         if (auth()->check() && auth()->user()->rol === 'emprendedor') {
             return $next($request);
         }
+        
+        if (auth()->check() && auth()->user()->rol === 'comprador') {
+            return $next($request);
+        }
 
         // Si no es comprador, lo mandamos afuera con un error
         abort(403, 'Lo sentimos, solo los usuarios con rol comprador pueden entrar aquí.');

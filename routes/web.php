@@ -19,7 +19,12 @@ Route::post('/publicaciones/{id}/like', [PublicationsController::class, 'toggleL
 Route::post('/publicaciones/{id}/comentar', [PublicationsController::class, 'storeComentario'])
     ->middleware('auth')
     ->name('publicaciones.comentar');
+
 Route::get('/dashboard',[PublicationsController::class, 'index'])->name('dashboard');
+
+Route::get('/servicios', fn() => view('public.products.servicios'))->name('public.servicios');
+Route::get('/proyectos',  fn() => view('public.products.proyectos'))->name('public.proyectos');
+Route::get('/comunidad',  fn() => view('public.products.comunidad'))->name('public.comunidad');
 
 
 

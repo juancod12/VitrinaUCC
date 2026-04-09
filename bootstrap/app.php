@@ -14,6 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
         then: function () {
             Route::middleware('web')
                 ->group(base_path('routes/seller.php'));
+                
+            Route::middleware('web')
+                ->group(base_path('routes/buyer.php'));
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
@@ -25,6 +28,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'emprendedor' => \App\Http\Middleware\CheckComprador::class,
+        ]);
+    })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'comprador' => \App\Http\Middleware\CheckComprador::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
