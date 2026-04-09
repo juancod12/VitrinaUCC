@@ -53,6 +53,34 @@
                         <button class="text-sky-600 px-3 py-2 text-sm font-semibold hover:bg-sky-50 rounded-lg transition">
                             Aliados
                         </button>
+
+                        {{-- 🛒 Carrito de compras rápido --}}
+                        @auth
+                            @php $cartCount = collect(session('cart'))->sum('cantidad'); @endphp
+                            <a href="{{ route('user.buyer.cart') }}"
+                               title="Ir al carrito"
+                               class="relative flex flex-col items-center text-gray-500 hover:text-lime-600 transition group">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                                </svg>
+                                <span class="text-[9px] font-black uppercase">Carrito</span>
+                                @if($cartCount > 0)
+                                    <span class="absolute -top-1.5 -right-1.5 bg-lime-500 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow">
+                                        {{ $cartCount > 9 ? '9+' : $cartCount }}
+                                    </span>
+                                @endif
+                            </a>
+                        @else
+                            <a href="{{ route('login') }}"
+                               title="Inicia sesión para ver tu carrito"
+                               class="flex flex-col items-center text-gray-400 hover:text-lime-500 transition group">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                                </svg>
+                                <span class="text-[9px] font-black uppercase">Carrito</span>
+                            </a>
+                        @endauth
+
                         <button class="bg-lime-500 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-lime-600 shadow-md shadow-lime-100 transition">
                             Acceso Comunidad
                         </button>
@@ -81,7 +109,19 @@
                                         <p class="text-sm text-center font-medium text-gray-900 truncate">{{ Auth::user()->name }}</p>
                                     </div>
                                     <div class="py-1">
-                                        <a href="{{ route('user.seller.sellerPanel') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-50 transition">Mi Perfil</a>
+                                        @if(Auth::user()->esEmprendedor())
+                                            <a href="{{ route('user.seller.sellerPanel') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-50 transition">Mi Panel</a>
+                                        @else
+                                            <a href="{{ route('user.buyer.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-50 transition">Mi Cuenta</a>
+                                            <a href="{{ route('user.buyer.cart') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-lime-50 transition">
+                                                <svg class="w-4 h-4 text-lime-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                                                Mi Carrito
+                                                @php $cartCount = collect(session('cart'))->sum('cantidad'); @endphp
+                                                @if($cartCount > 0)
+                                                    <span class="ml-auto bg-lime-500 text-white text-[10px] font-black px-1.5 py-0.5 rounded-full">{{ $cartCount }}</span>
+                                                @endif
+                                            </a>
+                                        @endif
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
                                             <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition">Cerrar Sesión</button>
@@ -92,7 +132,23 @@
                         @endauth
                     </div>
 
+                    {{-- Botón hamburguesa móvil --}}
                     <div class="flex items-center md:hidden">
+                        {{-- Carrito móvil visible siempre en la barra --}}
+                        @auth
+                            @php $cartCountMobile = collect(session('cart'))->sum('cantidad'); @endphp
+                            <a href="{{ route('user.buyer.cart') }}" class="relative mr-3 text-gray-500 hover:text-lime-600 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                                </svg>
+                                @if($cartCountMobile > 0)
+                                    <span class="absolute -top-1.5 -right-1.5 bg-lime-500 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center">
+                                        {{ $cartCountMobile > 9 ? '9+' : $cartCountMobile }}
+                                    </span>
+                                @endif
+                            </a>
+                        @endauth
+
                         <button @click="open = !open" class="p-2 rounded-md text-gray-400 hover:text-sky-500 hover:bg-gray-100 transition focus:outline-none">
                             <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                 <path :class="{'hidden': open, 'inline-flex': !open }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -103,6 +159,7 @@
                 </div>
             </div>
 
+            {{-- Menú móvil desplegable --}}
             <div x-show="open" 
                 x-cloak 
                 x-transition:enter="transition ease-out duration-200"
@@ -131,7 +188,19 @@
                                 <div class="text-sm text-gray-500">{{ Auth::user()->email }}</div>
                             </div>
                         </div>
-                        <a href="{{ route('user.seller.sellerPanel') }}" class="block px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 rounded-md">Mi Perfil</a>
+                        @if(Auth::user()->esEmprendedor())
+                            <a href="{{ route('user.seller.sellerPanel') }}" class="block px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 rounded-md">Mi Panel</a>
+                        @else
+                            <a href="{{ route('user.buyer.dashboard') }}" class="block px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 rounded-md">Mi Cuenta</a>
+                            <a href="{{ route('user.buyer.cart') }}" class="flex items-center gap-2 px-3 py-2 text-base font-medium text-lime-600 hover:bg-lime-50 rounded-md">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                                Mi Carrito
+                                @php $cartCountMenu = collect(session('cart'))->sum('cantidad'); @endphp
+                                @if($cartCountMenu > 0)
+                                    <span class="bg-lime-500 text-white text-xs font-black px-2 py-0.5 rounded-full">{{ $cartCountMenu }}</span>
+                                @endif
+                            </a>
+                        @endif
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="block w-full text-left px-3 py-2 text-base font-medium text-red-600 hover:bg-red-50 rounded-md">Cerrar Sesión</button>

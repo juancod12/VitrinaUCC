@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use App\Models\Favorito;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -23,7 +24,7 @@ class User extends Authenticatable
 
     protected $casts = ['activo' => 'boolean', 'bloqueado' => 'boolean'];
 
-    public function perfilComprador() { return $this->hasOne(PerfilCompradores::class); }
+    public function perfilComprador() { return $this->hasOne(PerfilComprador::class); }
     public function perfilEmprendedor()
     {
         return $this->hasOne(PerfilEmprendedores::class, 'user_id');
@@ -31,6 +32,8 @@ class User extends Authenticatable
     public function direcciones() { return $this->hasMany(Direccion::class); }
     public function comentarios() { return $this->hasMany(Comentario::class); }
     public function pedidos() { return $this->hasMany(Pedido::class, 'comprador_id'); }
+    public function favoritos() { return $this->hasMany(Favorito::class); }
+    public function productosFavoritos() { return $this->belongsToMany(Producto::class, 'favoritos'); }
 
     public function esAdmin() { return $this->rol === 'admin'; }
     public function esEmprendedor() { return $this->rol === 'emprendedor'; }
